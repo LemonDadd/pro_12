@@ -1,0 +1,613 @@
+[
+  {
+    "id": 1,
+    "layout": [
+      "NNNNNNNNNN",
+      "NNNNNNNNNN",
+      "NNNNNNNNNN",
+      "NNNNNNNNNN"
+    ],
+    "ballSpeed": 420,
+    "paddleWidth": 120,
+    "powerupDropRate": 0.12,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 800,
+    "brickAreaTop": 80,
+    "brickRows": 4,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 2,
+    "layout": [
+      "NNNNNNNNNN",
+      "NNNNNNNNNN",
+      "NNN..NNNNN",
+      "NNNNNNNNNN",
+      "NNNNNNNNNN"
+    ],
+    "ballSpeed": 420,
+    "paddleWidth": 120,
+    "powerupDropRate": 1.0,
+    "allowedPowerups": ["SPLIT_360"],
+    "parScore": 1000,
+    "brickAreaTop": 80,
+    "brickRows": 5,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 3,
+    "layout": [
+      "NNNNNNNNNN",
+      ".NNNNNNNN.",
+      "NNNNNNNNNN",
+      ".NNNNNNNN.",
+      "NNNNNNNNNN"
+    ],
+    "ballSpeed": 420,
+    "paddleWidth": 120,
+    "powerupDropRate": 0.12,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 1200,
+    "brickAreaTop": 80,
+    "brickRows": 5,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 4,
+    "layout": [
+      "NNNNNNNNNN",
+      "TTTTTTTTTT",
+      "NNNNNNNNNN",
+      "TTTTTTTTTT"
+    ],
+    "ballSpeed": 420,
+    "paddleWidth": 115,
+    "powerupDropRate": 1.0,
+    "allowedPowerups": ["SPLIT_FAN_UP"],
+    "parScore": 1400,
+    "brickAreaTop": 80,
+    "brickRows": 4,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 5,
+    "layout": [
+      "..TTTTTT..",
+      ".TTTTTTTT.",
+      "TTTTTTTTTT",
+      ".TTTTTTTT.",
+      "..TTTTTT.."
+    ],
+    "ballSpeed": 440,
+    "paddleWidth": 115,
+    "powerupDropRate": 0.15,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 1600,
+    "brickAreaTop": 80,
+    "brickRows": 5,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 6,
+    "layout": [
+      "SSSSSSSSSS",
+      "SNNNNNNNNS",
+      "SNNNNNNNNS",
+      "SNNNNNNNNS",
+      "SNNNNNNNNS",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 440,
+    "paddleWidth": 110,
+    "powerupDropRate": 0.12,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 1800,
+    "brickAreaTop": 70,
+    "brickRows": 6,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 7,
+    "layout": [
+      "STTTTTTTTS",
+      "TNNNNNNNNT",
+      "TNNTTTTNNT",
+      "TNNTTTTNNT",
+      "TNNNNNNNNT",
+      "STTTTTTTTS"
+    ],
+    "ballSpeed": 450,
+    "paddleWidth": 110,
+    "powerupDropRate": 0.15,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 2000,
+    "brickAreaTop": 70,
+    "brickRows": 6,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 8,
+    "layout": [
+      "S..SSSS..S",
+      "S..TTTT..S",
+      "SSSNNNNSSS",
+      "SSNNNNNNSS",
+      "S..TTTT..S",
+      "S..SSSS..S"
+    ],
+    "ballSpeed": 460,
+    "paddleWidth": 105,
+    "powerupDropRate": 0.15,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 2200,
+    "brickAreaTop": 70,
+    "brickRows": 6,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 9,
+    "layout": [
+      "SSSSSSSSSS",
+      "STTTTTTTTS",
+      "STNNNNNNTS",
+      "STNN..NNTS",
+      "STNNNNNNTS",
+      "STTTTTTTTS",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 470,
+    "paddleWidth": 105,
+    "powerupDropRate": 0.18,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 2400,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 10,
+    "layout": [
+      "S.STSTST.S",
+      "STNTNTNTNS",
+      "SNTNTNTNTS",
+      "STNTNTNTNS",
+      "SNTNTNTNTS",
+      "STNTNTNTNS",
+      "S.STSTST.S"
+    ],
+    "ballSpeed": 480,
+    "paddleWidth": 100,
+    "powerupDropRate": 0.18,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 2800,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 11,
+    "layout": [
+      "EEEEEEEEEE",
+      "NNNNNNNNNN",
+      "NNNNNNNNNN",
+      "EEEEEEEEEE",
+      "NNNNNNNNNN"
+    ],
+    "ballSpeed": 480,
+    "paddleWidth": 100,
+    "powerupDropRate": 0.18,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 3000,
+    "brickAreaTop": 60,
+    "brickRows": 5,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 12,
+    "layout": [
+      "SSSSSSSSSS",
+      "SEEEEEEEES",
+      "SNNNNNNNNS",
+      "SEEEEEEEES",
+      "SNNNNNNNNS",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 500,
+    "paddleWidth": 95,
+    "powerupDropRate": 0.20,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 3200,
+    "brickAreaTop": 60,
+    "brickRows": 6,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 13,
+    "layout": [
+      "E.TT..TT.E",
+      ".TNNEENNT.",
+      "TNNEEEE NNT",
+      "TNNEEEE NNT",
+      ".TNNEENNT.",
+      "E.TT..TT.E"
+    ],
+    "ballSpeed": 510,
+    "paddleWidth": 95,
+    "powerupDropRate": 0.20,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 3500,
+    "brickAreaTop": 60,
+    "brickRows": 6,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 14,
+    "layout": [
+      "TTTTTTTTTT",
+      "TENNNNNNET",
+      "TENTTTTNET",
+      "TEN....NET",
+      "TENTTTTNET",
+      "TENNNNNNET",
+      "TTTTTTTTTT"
+    ],
+    "ballSpeed": 520,
+    "paddleWidth": 90,
+    "powerupDropRate": 0.22,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 3800,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 15,
+    "layout": [
+      "SSSSEESSSS",
+      "SNTT..TTNS",
+      "SNEETTEENS",
+      "SETNNNN TES",
+      "SNEETTEENS",
+      "SNTT..TTNS",
+      "SSSSEESSSS"
+    ],
+    "ballSpeed": 530,
+    "paddleWidth": 90,
+    "powerupDropRate": 0.22,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 4000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 16,
+    "layout": [
+      "EETTTTEETT",
+      "ENNNNNENNN",
+      "ETTEETT ETT",
+      "ENNNN NENNN",
+      "ETTEETT ETT",
+      "ENNNNNENNN",
+      "EETTTTEETT"
+    ],
+    "ballSpeed": 540,
+    "paddleWidth": 85,
+    "powerupDropRate": 0.25,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 4300,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 17,
+    "layout": [
+      "STSTSTSTST",
+      "TETETETETE",
+      "NTNTNTNTNT",
+      "ETETETETET",
+      "NTNTNTNTNT",
+      "TETETETETE",
+      "STSTSTSTST"
+    ],
+    "ballSpeed": 550,
+    "paddleWidth": 85,
+    "powerupDropRate": 0.25,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 4600,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 18,
+    "layout": [
+      "EEEEEEEEEE",
+      "ESSSSSSSSE",
+      "ESTTTTTTSE",
+      "ESTNNNN TSE",
+      "ESTTTTTTSE",
+      "ESSSSSSSSE",
+      "EEEEEEEEEE"
+    ],
+    "ballSpeed": 560,
+    "paddleWidth": 80,
+    "powerupDropRate": 0.28,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 5000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 19,
+    "layout": [
+      "TENNETENNE",
+      "ENNTENNTEN",
+      "NTENNETENN",
+      "TENNETENNE",
+      "ENNTENNTEN",
+      "NTENNETENN",
+      "TENNETENNE"
+    ],
+    "ballSpeed": 570,
+    "paddleWidth": 80,
+    "powerupDropRate": 0.28,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 5300,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 20,
+    "layout": [
+      "SSSSSSSSSS",
+      "SEEETTTEES",
+      "SETNNNN TES",
+      "SETNEE NES",
+      "SETNNNN TES",
+      "SEEETTTEES",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 580,
+    "paddleWidth": 75,
+    "powerupDropRate": 0.30,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 5600,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 21,
+    "layout": [
+      "EETTEETTEE",
+      "TENNETENNE",
+      "NNEENNNEEN",
+      "TTEETTEETT",
+      "NNEENNNEEN",
+      "TENNETENNE",
+      "EETTEETTEE"
+    ],
+    "ballSpeed": 600,
+    "paddleWidth": 75,
+    "powerupDropRate": 0.35,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 6000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 22,
+    "layout": [
+      "TTTTTETTTT",
+      "TNNNNTNNNT",
+      "NTEEN NTEEN",
+      "TNNNNTNNNT",
+      "NTEEN NTEEN",
+      "TNNNNTNNNT",
+      "TTTTTETTTT"
+    ],
+    "ballSpeed": 620,
+    "paddleWidth": 70,
+    "powerupDropRate": 0.35,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 6400,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 23,
+    "layout": [
+      "SSSSEEESSS",
+      "SENNENNES S",
+      "SENTTNTNES",
+      "SENEEEENES",
+      "SENTTNTNES",
+      "SENNENNES S",
+      "SSSSEEESSS"
+    ],
+    "ballSpeed": 640,
+    "paddleWidth": 70,
+    "powerupDropRate": 0.38,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 6800,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 24,
+    "layout": [
+      "EETTTEETTT",
+      "ETNNNETENN",
+      "TNEENTENET",
+      "ENNETTNEEN",
+      "TNEENTENET",
+      "ETNNNETENN",
+      "EETTTEETTT"
+    ],
+    "ballSpeed": 660,
+    "paddleWidth": 65,
+    "powerupDropRate": 0.38,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 7200,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 25,
+    "layout": [
+      "STESSTESST",
+      "TENETENETE",
+      "NESSTESSNE",
+      "STENETENES",
+      "NESSTESSNE",
+      "TENETENETE",
+      "STESSTESST"
+    ],
+    "ballSpeed": 680,
+    "paddleWidth": 65,
+    "powerupDropRate": 0.40,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 7600,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 26,
+    "layout": [
+      "EEEEEEEEEE",
+      "ESSSSSSSSE",
+      "ESTEETEESSE",
+      "ESENNNNNES",
+      "ESTEETEESSE",
+      "ESSSSSSSSE",
+      "EEEEEEEEEE"
+    ],
+    "ballSpeed": 700,
+    "paddleWidth": 60,
+    "powerupDropRate": 0.42,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 8000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 27,
+    "layout": [
+      "TEENNNEENT",
+      "EENNTTNNEE",
+      "ENTEETENET",
+      "NTEETTEETN",
+      "ENTEETENET",
+      "EENNTTNNEE",
+      "TEENNNEENT"
+    ],
+    "ballSpeed": 730,
+    "paddleWidth": 60,
+    "powerupDropRate": 0.45,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 8500,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 28,
+    "layout": [
+      "SSSSSSSSSS",
+      "SEETTTTEES",
+      "SENNNNNNES",
+      "SENTEETNES",
+      "SENNNNNNES",
+      "SEETTTTEES",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 760,
+    "paddleWidth": 55,
+    "powerupDropRate": 0.45,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 9000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 29,
+    "layout": [
+      "EETEETEETE",
+      "ETEETEETEE",
+      "TEETEETEET",
+      "EETEETEETE",
+      "TEETEETEET",
+      "ETEETEETEE",
+      "EETEETEETE"
+    ],
+    "ballSpeed": 800,
+    "paddleWidth": 55,
+    "powerupDropRate": 0.48,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 9500,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  },
+  {
+    "id": 30,
+    "layout": [
+      "SSSSSSSSSS",
+      "SEEEEEEEES",
+      "SETTTTTTES",
+      "SETENETTES",
+      "SETTTTTTES",
+      "SEEEEEEEES",
+      "SSSSSSSSSS"
+    ],
+    "ballSpeed": 850,
+    "paddleWidth": 50,
+    "powerupDropRate": 0.50,
+    "allowedPowerups": ["SPLIT_360", "SPLIT_FAN_UP"],
+    "parScore": 10000,
+    "brickAreaTop": 60,
+    "brickRows": 7,
+    "brickCols": 10,
+    "brickPadding": 4
+  }
+]
