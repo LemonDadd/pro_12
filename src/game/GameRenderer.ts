@@ -301,6 +301,8 @@ export class GameRenderer {
     const cfg = SPLIT_CONFIG[vfx.type]
     const ctx = this.ctx
     ctx.save()
+    const cx = vfx.x
+    const cy = vfx.y
 
     const expandR = 18 + progress * 80
     ctx.strokeStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 200))}`
@@ -310,18 +312,18 @@ export class GameRenderer {
 
     if (vfx.type === 'SPLIT_360') {
       ctx.beginPath()
-      ctx.arc(CENTER.x, CENTER.y, expandR, 0, Math.PI * 2)
+      ctx.arc(cx, cy, expandR, 0, Math.PI * 2)
       ctx.stroke()
     } else {
       ctx.fillStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 70))}`
       ctx.beginPath()
-      ctx.moveTo(CENTER.x, CENTER.y)
-      ctx.arc(CENTER.x, CENTER.y, expandR, Math.PI, 0, false)
+      ctx.moveTo(cx, cy)
+      ctx.arc(cx, cy, expandR, Math.PI, 0, false)
       ctx.closePath()
       ctx.fill()
       ctx.strokeStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 200))}`
       ctx.beginPath()
-      ctx.arc(CENTER.x, CENTER.y, expandR, Math.PI, 0, false)
+      ctx.arc(cx, cy, expandR, Math.PI, 0, false)
       ctx.stroke()
     }
 
@@ -331,10 +333,10 @@ export class GameRenderer {
     for (const angleDeg of vfx.angles) {
       const rad = (angleDeg * Math.PI) / 180
       const len = expandR + 20
-      const ex = CENTER.x + len * Math.cos(rad)
-      const ey = CENTER.y - len * Math.sin(rad)
+      const ex = cx + len * Math.cos(rad)
+      const ey = cy - len * Math.sin(rad)
       ctx.beginPath()
-      ctx.moveTo(CENTER.x, CENTER.y)
+      ctx.moveTo(cx, cy)
       ctx.lineTo(ex, ey)
       ctx.stroke()
     }
@@ -342,7 +344,7 @@ export class GameRenderer {
 
     ctx.fillStyle = `${cfg.glowColor}`
     ctx.beginPath()
-    ctx.arc(CENTER.x, CENTER.y, 6 * (1 - progress) + 2, 0, Math.PI * 2)
+    ctx.arc(cx, cy, 6 * (1 - progress) + 2, 0, Math.PI * 2)
     ctx.fill()
 
     ctx.restore()

@@ -82,7 +82,7 @@ export class GameEngine {
     left: 0, top: 0, width: CANVAS_WIDTH, height: CANVAS_HEIGHT, scale: 1
   }
   private listeners: ((e: EngineEvent) => void)[] = []
-  private pendingSplit: { type: PowerUpType; speed: number } | null = null
+  private pendingSplit: { type: PowerUpType; speed: number; x: number; y: number } | null = null
   private splitPendingUntil = 0
   shakeAmount = 0
   private brickW = 0
@@ -403,7 +403,7 @@ export class GameEngine {
 
   private updateSplitVfx(nowMs: number) {
     if (this.pendingSplit && nowMs >= this.splitPendingUntil) {
-      this.executeSplit(this.pendingSplit.type, this.pendingSplit.speed)
+      this.executeSplit(this.pendingSplit.type, this.pendingSplit.speed, this.pendingSplit.x, this.pendingSplit.y)
       this.pendingSplit = null
       this.splitVfx = null
     }
@@ -655,16 +655,37 @@ export class GameEngine {
     const avgSpeed = this.computeBallSpeed()
     const speed = this.clampBallSpeed(Math.max(this.levelConfig.ballSpeed, avgSpeed))
     const cfg = SPLIT_CONFIG[type]
+
+    const activeBalls = this.balls.filter((b) => b.vx !== 0 || b.vy !== 0)
+    let originX: number
+    let originY: number
+    if (activeBalls.length > 0) {
+      const avg = activeBalls.reduce(
+        (acc, b) => ({ x: acc.x + b.x, y: acc.y + b.y }),
+        { x: 0, y: 0 },
+      )
+      originX = avg.x / activeBalls.length
+      originY = avg.y / activeBalls.length
+    } else {
+      originX = this.paddle.x + this.paddle.w / 2
+      originY = this.paddle.y - BALL_RADIUS * 3
+    }
+    originX = Math.max(BALL_RADIUS, Math.min(CANVAS_WIDTH - BALL_RADIUS, originX))
+    originY = Math.max(BALL_RADIUS, Math.min(CANVAS_HEIGHT - BALL_RADIUS * 2, originY))
+
     this.splitVfx = {
       active: true,
       type,
       startTime: performance.now(),
       duration: SPLIT_VFX_DURATION,
       angles: cfg.anglesDeg,
+      x: originX,
+      y: originY,
     }
-    this.pendingSplit = { type, speed }
+    this.pendingSplit = { type, speed, x: originX, y: originY }
     this.splitPendingUntil = performance.now() + SPLIT_VFX_DURATION
-    this.balls = this.balls.filter((b) => b.vx === 0 && b.vy === 0)
+    this.balls = []
+    this.waitingLaunch = false
     audioManager.playSfx('split')
   }
 
@@ -675,16 +696,16 @@ export class GameEngine {
     return total / active.length
   }
 
-  private executeSplit(type: PowerUpType, speed: number) {
+  private executeSplit(type: PowerUpType, speed: number, x: number, y: number) {
     const cfg = SPLIT_CONFIG[type]
-    const newBalls: Ball[] = [...this.balls]
+    const newBalls: Ball[] = []
     for (const angle of cfg.anglesDeg) {
       if (newBalls.length >= MAX_BALLS_ON_SCREEN) break
       const { vx, vy } = this.angleToVelocity(angle, speed)
       newBalls.push({
         id: this.ballNextId++,
-        x: CENTER.x,
-        y: CENTER.y,
+        x,
+        y,
         vx,
         vy,
         radius: BALL_RADIUS,

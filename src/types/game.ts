@@ -102,6 +102,8 @@ export interface SplitVFX {
   startTime: number
   duration: number
   angles: number[]
+  x: number
+  y: number
 }
 
 export interface ExplosionVFX {
