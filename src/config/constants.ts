@@ -23,8 +23,6 @@ export const POWERUP_SIZE = 28
 
 export const DEFAULT_DROP_RATE = 0.12
 
-export const SPLIT_VFX_DURATION = 400
-
 export const BRICK_SCORES: Record<BrickType, number> = {
   normal: 10,
   tough: 20,

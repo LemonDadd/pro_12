@@ -96,16 +96,6 @@ export interface ComboState {
   count: number
 }
 
-export interface SplitVFX {
-  active: boolean
-  type: PowerUpType
-  startTime: number
-  duration: number
-  angles: number[]
-  x: number
-  y: number
-}
-
 export interface ExplosionVFX {
   x: number
   y: number
