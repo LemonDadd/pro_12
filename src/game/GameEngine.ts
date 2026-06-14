@@ -22,7 +22,6 @@ import {
   DEFAULT_LIVES,
   DEFAULT_PADDLE_WIDTH,
   LAUNCH_SPREAD_DEG,
-  MAX_BALLS_ON_SCREEN,
   MAX_POWERUPS_ON_SCREEN,
   PADDLE_HEIGHT,
   PADDLE_Y,
@@ -296,7 +295,7 @@ export class GameEngine {
 
   private triggerSplit(type: PowerUpType) {
     const result = splitBalls(this.balls, type, () => this.ballNextId++)
-    this.balls = result.balls.slice(0, MAX_BALLS_ON_SCREEN)
+    this.balls = result.balls
     this.waitingLaunch = result.waitingLaunch
     this.emit({ type: 'ballsChange', count: this.balls.length })
     audioManager.playSfx('split')

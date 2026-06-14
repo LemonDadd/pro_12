@@ -9,7 +9,12 @@ export function bindGameInput(
   canvas: HTMLCanvasElement,
   options: { mouseControl: boolean } = { mouseControl: true },
 ): InputBindings {
+  const GAME_KEYS = new Set([
+    'ArrowLeft', 'ArrowRight', 'KeyA', 'KeyD', 'Space', 'KeyP', 'Escape',
+  ])
+
   const handleKeyDown = (e: KeyboardEvent) => {
+    if (GAME_KEYS.has(e.code)) e.preventDefault()
     engine.keyDown(e.code)
   }
 
@@ -41,9 +46,9 @@ export function bindGameInput(
   window.addEventListener('keydown', handleKeyDown)
   window.addEventListener('keyup', handleKeyUp)
   canvas.addEventListener('mousemove', handleMouseMove)
-  canvas.addEventListener('touchmove', handleTouchMove, { passive: true })
+  canvas.addEventListener('touchmove', handleTouchMove, { passive: false })
   canvas.addEventListener('click', handleClick)
-  canvas.addEventListener('touchstart', handleTouchStart, { passive: true })
+  canvas.addEventListener('touchstart', handleTouchStart, { passive: false })
 
   const updateCanvasRect = () => {
     const rect = canvas.getBoundingClientRect()

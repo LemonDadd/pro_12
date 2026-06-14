@@ -1,5 +1,5 @@
 import type { Ball, PowerUpType } from '@/types/game'
-import { SPLIT_CONFIG, BALL_RADIUS, MAX_BALLS_ON_SCREEN } from '@/config/constants'
+import { SPLIT_CONFIG, BALL_RADIUS } from '@/config/constants'
 import { angleToVelocity, clampBallSpeed } from './angles'
 
 export interface SplitResult {
@@ -19,10 +19,8 @@ export function splitBalls(
   const newBalls: Ball[] = [...stuckBalls]
 
   for (const source of activeBalls) {
-    if (newBalls.length >= MAX_BALLS_ON_SCREEN) break
     const speed = clampBallSpeed(Math.hypot(source.vx, source.vy))
     for (const angle of cfg.anglesDeg) {
-      if (newBalls.length >= MAX_BALLS_ON_SCREEN) break
       const { vx, vy } = angleToVelocity(angle, speed)
       newBalls.push({
         id: getNextBallId(),
