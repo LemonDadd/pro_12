@@ -69,7 +69,6 @@ export class GameRenderer {
     if (this.showCenterMarker) this.drawCenterMarker()
     this.drawBricks()
     this.drawExplosions()
-    this.drawSplitVfx()
     this.drawPowerups()
     this.drawPaddle()
     this.drawBalls()
@@ -290,63 +289,6 @@ export class GameRenderer {
         ctx.fill()
       }
     }
-    ctx.restore()
-  }
-
-  private drawSplitVfx() {
-    const vfx = this.engine.splitVfx
-    if (!vfx) return
-    const now = performance.now()
-    const progress = Math.min(1, (now - vfx.startTime) / vfx.duration)
-    const cfg = SPLIT_CONFIG[vfx.type]
-    const ctx = this.ctx
-    ctx.save()
-    const cx = vfx.x
-    const cy = vfx.y
-
-    const expandR = 18 + progress * 80
-    ctx.strokeStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 200))}`
-    ctx.lineWidth = 3
-    ctx.shadowColor = cfg.glowColor
-    ctx.shadowBlur = 20
-
-    if (vfx.type === 'SPLIT_360') {
-      ctx.beginPath()
-      ctx.arc(cx, cy, expandR, 0, Math.PI * 2)
-      ctx.stroke()
-    } else {
-      ctx.fillStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 70))}`
-      ctx.beginPath()
-      ctx.moveTo(cx, cy)
-      ctx.arc(cx, cy, expandR, Math.PI, 0, false)
-      ctx.closePath()
-      ctx.fill()
-      ctx.strokeStyle = `${cfg.color}${this.hex(Math.floor((1 - progress) * 200))}`
-      ctx.beginPath()
-      ctx.arc(cx, cy, expandR, Math.PI, 0, false)
-      ctx.stroke()
-    }
-
-    ctx.strokeStyle = `${cfg.glowColor}${this.hex(Math.floor((1 - progress * 0.7) * 255))}`
-    ctx.lineWidth = 2
-    ctx.setLineDash([6, 6])
-    for (const angleDeg of vfx.angles) {
-      const rad = (angleDeg * Math.PI) / 180
-      const len = expandR + 20
-      const ex = cx + len * Math.cos(rad)
-      const ey = cy - len * Math.sin(rad)
-      ctx.beginPath()
-      ctx.moveTo(cx, cy)
-      ctx.lineTo(ex, ey)
-      ctx.stroke()
-    }
-    ctx.setLineDash([])
-
-    ctx.fillStyle = `${cfg.glowColor}`
-    ctx.beginPath()
-    ctx.arc(cx, cy, 6 * (1 - progress) + 2, 0, Math.PI * 2)
-    ctx.fill()
-
     ctx.restore()
   }
 

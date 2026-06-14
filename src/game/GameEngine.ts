@@ -9,7 +9,6 @@ import type {
   Paddle,
   PowerUp,
   PowerUpType,
-  SplitVFX,
 } from '@/types/game'
 import {
   BALL_RADIUS,
@@ -66,7 +65,6 @@ export class GameEngine {
   balls: Ball[] = []
   bricks: BrickCell[] = []
   powerups: PowerUp[] = []
-  splitVfx: SplitVFX | null = null
   explosions: ExplosionVFX[] = []
   combo: ComboState = { multiplier: 1, lastBreakTime: 0, count: 0 }
   waitingLaunch = true
@@ -82,8 +80,6 @@ export class GameEngine {
     left: 0, top: 0, width: CANVAS_WIDTH, height: CANVAS_HEIGHT, scale: 1
   }
   private listeners: ((e: EngineEvent) => void)[] = []
-  private pendingSplit: { type: PowerUpType; speed: number; x: number; y: number } | null = null
-  private splitPendingUntil = 0
   shakeAmount = 0
   private brickW = 0
   private brickH = 0
@@ -299,8 +295,6 @@ export class GameEngine {
     this.ballNextId = 1
     this.powerupNextId = 1
     this.explosions = []
-    this.splitVfx = null
-    this.pendingSplit = null
     this.combo = { multiplier: 1, lastBreakTime: 0, count: 0 }
     this.shakeAmount = 0
     this.loadLevelConfig()
@@ -321,8 +315,6 @@ export class GameEngine {
     this.ballNextId = 1
     this.powerupNextId = 1
     this.explosions = []
-    this.splitVfx = null
-    this.pendingSplit = null
     this.combo = { multiplier: 1, lastBreakTime: 0, count: 0 }
     this.shakeAmount = 0
     this.loadLevelConfig()
@@ -345,8 +337,6 @@ export class GameEngine {
     this.ballNextId = 1
     this.powerupNextId = 1
     this.explosions = []
-    this.splitVfx = null
-    this.pendingSplit = null
     this.spawnInitialBall()
     this.status = 'ready'
     this.emit({ type: 'statusChange', value: 'ready' })
@@ -376,12 +366,11 @@ export class GameEngine {
       this.shakeAmount = Math.max(0, this.shakeAmount - dt * 30)
     }
     this.updatePaddle(dt)
-    this.updateSplitVfx(nowMs)
     this.updateBalls(dt, nowMs)
     this.updatePowerups(dt)
     this.updateExplosions(dt)
     this.updateCombo(nowMs)
-    if (!this.waitingLaunch && this.balls.length === 0 && !this.pendingSplit) {
+    if (!this.waitingLaunch && this.balls.length === 0) {
       this.handleBallLost(nowMs)
     }
     this.checkWin(nowMs)
@@ -401,17 +390,6 @@ export class GameEngine {
     }
   }
 
-  private updateSplitVfx(nowMs: number) {
-    if (this.pendingSplit && nowMs >= this.splitPendingUntil) {
-      this.executeSplit(this.pendingSplit.type, this.pendingSplit.speed, this.pendingSplit.x, this.pendingSplit.y)
-      this.pendingSplit = null
-      this.splitVfx = null
-    }
-    if (this.splitVfx) {
-      const progress = (nowMs - this.splitVfx.startTime) / this.splitVfx.duration
-      if (progress >= 1) this.splitVfx = null
-    }
-  }
 
   private updateBalls(dt: number, nowMs: number) {
     const survivors: Ball[] = []
@@ -420,27 +398,58 @@ export class GameEngine {
         survivors.push(ball)
         continue
       }
-      let nx = ball.x + ball.vx * dt
-      let ny = ball.y + ball.vy * dt
+      let nx = ball.x
+      let ny = ball.y
       let vx = ball.vx
       let vy = ball.vy
 
-      if (nx - ball.radius < 0) { nx = ball.radius; vx = Math.abs(vx); audioManager.playSfx('paddleHit') }
-      if (nx + ball.radius > CANVAS_WIDTH) { nx = CANVAS_WIDTH - ball.radius; vx = -Math.abs(vx); audioManager.playSfx('paddleHit') }
-      if (ny - ball.radius < 0) { ny = ball.radius; vy = Math.abs(vy); audioManager.playSfx('paddleHit') }
+      const totalDx = vx * dt
+      const totalDy = vy * dt
+      const stepY = BALL_RADIUS * 0.75
+      const totalDist = Math.abs(totalDy)
+      let steps = totalDist > 0 ? Math.max(1, Math.ceil(totalDist / stepY)) : 1
+      steps = Math.min(steps, 16)
 
-      if (this.intersectsPaddle(nx, ny, ball.radius, vx, vy)) {
-        const relative = (nx - (this.paddle.x + this.paddle.w / 2)) / (this.paddle.w / 2)
-        const angleDeg = relative * PADDLE_REFLECT_MAX_ANGLE
-        const angleRad = (angleDeg * Math.PI) / 180
-        const upRad = (90 * Math.PI) / 180
-        const finalAngle = upRad - angleRad
-        const speed = this.clampBallSpeed(Math.hypot(vx, vy))
-        vx = speed * Math.cos(finalAngle)
-        vy = -speed * Math.sin(finalAngle)
-        ny = this.paddle.y - ball.radius - 0.5
-        nx = Math.max(ball.radius, Math.min(CANVAS_WIDTH - ball.radius, nx))
-        audioManager.playSfx('paddleHit')
+      let hitPaddle = false
+      for (let s = 0; s < steps; s++) {
+        const frac = (s + 1) / steps
+        const stepX = ball.x + totalDx * frac
+        const stepYPos = ball.y + totalDy * frac
+
+        let stepVx = vx
+        let stepVy = vy
+
+        if (stepX - ball.radius < 0) {
+          nx = ball.radius; vx = Math.abs(vx); stepVx = vx
+          audioManager.playSfx('paddleHit')
+        }
+        if (stepX + ball.radius > CANVAS_WIDTH) {
+          nx = CANVAS_WIDTH - ball.radius; vx = -Math.abs(vx); stepVx = vx
+          audioManager.playSfx('paddleHit')
+        }
+        if (stepYPos - ball.radius < 0) {
+          ny = ball.radius; vy = Math.abs(vy); stepVy = vy
+          audioManager.playSfx('paddleHit')
+        }
+
+        nx = stepX
+        ny = stepYPos
+
+        if (!hitPaddle && this.sweptPaddleHit(ball.x, ball.y, nx, ny, ball.radius)) {
+          hitPaddle = true
+          const relative = (nx - (this.paddle.x + this.paddle.w / 2)) / (this.paddle.w / 2)
+          const angleDeg = relative * PADDLE_REFLECT_MAX_ANGLE
+          const angleRad = (angleDeg * Math.PI) / 180
+          const upRad = (90 * Math.PI) / 180
+          const finalAngle = upRad - angleRad
+          const speed = this.clampBallSpeed(Math.hypot(vx, vy))
+          vx = speed * Math.cos(finalAngle)
+          vy = -speed * Math.sin(finalAngle)
+          ny = this.paddle.y - ball.radius - 0.5
+          nx = Math.max(ball.radius, Math.min(CANVAS_WIDTH - ball.radius, nx))
+          audioManager.playSfx('paddleHit')
+          break
+        }
       }
 
       const brickHit = this.checkBrickCollision(nx, ny, ball.radius, vx, vy, nowMs)
@@ -463,6 +472,34 @@ export class GameEngine {
     }
     this.balls = survivors
     this.emit({ type: 'ballsChange', count: this.balls.length })
+  }
+
+  private sweptPaddleHit(
+    x0: number, y0: number, x1: number, y1: number, r: number,
+  ): boolean {
+    if (y1 <= y0) return false
+    const px1 = this.paddle.x
+    const px2 = this.paddle.x + this.paddle.w
+    const py = this.paddle.y
+    const dx = x1 - x0
+    const dy = y1 - y0
+    const withinX = x1 + r >= px1 && x1 - r <= px2
+    const topY = py
+    const prevBottom = y0 + r
+    const newBottom = y1 + r
+    if (prevBottom <= topY && newBottom >= topY && withinX) {
+      return true
+    }
+    if (dy > 0) {
+      const tTop = (py - (y0 + r)) / dy
+      if (tTop >= 0 && tTop <= 1) {
+        const hitX = x0 + dx * tTop
+        if (hitX >= px1 - r * 0.5 && hitX <= px2 + r * 0.5) {
+          return true
+        }
+      }
+    }
+    return false
   }
 
   private intersectsPaddle(x: number, y: number, r: number, vx: number, vy: number): boolean {
@@ -652,71 +689,38 @@ export class GameEngine {
   }
 
   private triggerSplit(type: PowerUpType) {
-    const avgSpeed = this.computeBallSpeed()
-    const speed = this.clampBallSpeed(Math.max(this.levelConfig.ballSpeed, avgSpeed))
     const cfg = SPLIT_CONFIG[type]
-
     const activeBalls = this.balls.filter((b) => b.vx !== 0 || b.vy !== 0)
-    let originX: number
-    let originY: number
-    if (activeBalls.length > 0) {
-      const avg = activeBalls.reduce(
-        (acc, b) => ({ x: acc.x + b.x, y: acc.y + b.y }),
-        { x: 0, y: 0 },
-      )
-      originX = avg.x / activeBalls.length
-      originY = avg.y / activeBalls.length
-    } else {
-      originX = this.paddle.x + this.paddle.w / 2
-      originY = this.paddle.y - BALL_RADIUS * 3
-    }
-    originX = Math.max(BALL_RADIUS, Math.min(CANVAS_WIDTH - BALL_RADIUS, originX))
-    originY = Math.max(BALL_RADIUS, Math.min(CANVAS_HEIGHT - BALL_RADIUS * 2, originY))
+    const stuckBalls = this.balls.filter((b) => b.vx === 0 && b.vy === 0)
 
-    this.splitVfx = {
-      active: true,
-      type,
-      startTime: performance.now(),
-      duration: SPLIT_VFX_DURATION,
-      angles: cfg.anglesDeg,
-      x: originX,
-      y: originY,
-    }
-    this.pendingSplit = { type, speed, x: originX, y: originY }
-    this.splitPendingUntil = performance.now() + SPLIT_VFX_DURATION
-    this.balls = []
-    this.waitingLaunch = false
-    audioManager.playSfx('split')
-  }
+    const newBalls: Ball[] = [...stuckBalls]
 
-  private computeBallSpeed(): number {
-    const active = this.balls.filter((b) => !(b.vx === 0 && b.vy === 0))
-    if (active.length === 0) return this.levelConfig.ballSpeed
-    const total = active.reduce((s, b) => s + Math.hypot(b.vx, b.vy), 0)
-    return total / active.length
-  }
-
-  private executeSplit(type: PowerUpType, speed: number, x: number, y: number) {
-    const cfg = SPLIT_CONFIG[type]
-    const newBalls: Ball[] = []
-    for (const angle of cfg.anglesDeg) {
+    for (const source of activeBalls) {
+      const speed = this.clampBallSpeed(Math.hypot(source.vx, source.vy))
+      for (const angle of cfg.anglesDeg) {
+        if (newBalls.length >= MAX_BALLS_ON_SCREEN) break
+        const { vx, vy } = this.angleToVelocity(angle, speed)
+        newBalls.push({
+          id: this.ballNextId++,
+          x: source.x,
+          y: source.y,
+          vx,
+          vy,
+          radius: BALL_RADIUS,
+          trail: [...source.trail],
+        })
+      }
       if (newBalls.length >= MAX_BALLS_ON_SCREEN) break
-      const { vx, vy } = this.angleToVelocity(angle, speed)
-      newBalls.push({
-        id: this.ballNextId++,
-        x,
-        y,
-        vx,
-        vy,
-        radius: BALL_RADIUS,
-        trail: [],
-      })
     }
+
     if (newBalls.length > MAX_BALLS_ON_SCREEN) {
       newBalls.length = MAX_BALLS_ON_SCREEN
     }
+
     this.balls = newBalls
+    this.waitingLaunch = stuckBalls.length > 0
     this.emit({ type: 'ballsChange', count: this.balls.length })
+    audioManager.playSfx('split')
   }
 
   private updateExplosions(dt: number) {
@@ -777,7 +781,7 @@ export class GameEngine {
     const ratio = score / p
     let stars = 1
     if (ratio >= 1.5) stars = 2
-    if (ratio >= 2 || lives >= DEFAULT_LIVES) stars = Math.min(3, Math.max(stars, 3))
+    if (ratio >= 2) stars = 3
     return stars
   }
 

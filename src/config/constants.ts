@@ -14,7 +14,7 @@ export const DEFAULT_PADDLE_WIDTH = 120
 export const PADDLE_HEIGHT = 16
 export const PADDLE_Y = CANVAS_HEIGHT - 40
 
-export const DEFAULT_LIVES = 3
+export const DEFAULT_LIVES = 1
 
 export const MAX_BALLS_ON_SCREEN = 8
 export const MAX_POWERUPS_ON_SCREEN = 2

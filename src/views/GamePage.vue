@@ -76,7 +76,7 @@
             </div>
             <div class="result-score">得分 {{ score.toLocaleString() }}</div>
             <div class="result-info" v-if="!isEndless">
-              目标 {{ parScore.toLocaleString() }} · 剩余生命 ×{{ lives }}
+              目标 {{ parScore.toLocaleString() }}
             </div>
             <div class="result-info" v-if="isEndless">
               即将进入第 {{ wave + 1 }} 波
